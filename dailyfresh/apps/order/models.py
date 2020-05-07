@@ -1,6 +1,5 @@
 from django.db import models
 from db.base_model import BaseModel
-from user.models import User
 
 class OrderInfo(BaseModel):
     '''订单模型类'''
@@ -20,8 +19,8 @@ class OrderInfo(BaseModel):
     )
 
     order_id = models.CharField(max_length=128,primary_key=True,verbose_name='订单编号')
-    user = models.ForeignKey('User.user',verbose_name='用户')
-    addr = models.ForeignKey('User.Address',verbose_name='地址')
+    user = models.ForeignKey('user.User',verbose_name='用户')
+    addr = models.ForeignKey('user.Address',verbose_name='地址')
     pay_method = models.SmallIntegerField(choices=PAY_METHOD_CHOICES,default=3,verbose_name='支付方式')
     total_count = models.IntegerField(default=1,verbose_name='商品数量')
     total_price = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='商品总价')
@@ -29,6 +28,8 @@ class OrderInfo(BaseModel):
     trade_no = models.CharField(max_length=128,verbose_name='支付编号')
     class Meta():
         db_table = 'df_order_info'
+        verbose_name = '订单'
+        verbose_name_plural = verbose_name
 
 class OrderGoods(BaseModel):
     '''订单商品模型类'''
@@ -39,3 +40,5 @@ class OrderGoods(BaseModel):
     comment = models.CharField(max_length=256, verbose_name='评论')
     class Meta():
         db_table = 'df_order_goods'
+        verbose_name = '订单商品'
+        verbose_name_plural = verbose_name

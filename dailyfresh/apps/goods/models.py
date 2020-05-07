@@ -2,7 +2,7 @@ from django.db import models
 from db.base_model import BaseModel
 from tinymce.models import HTMLField
 
-class GoodType(BaseModel):
+class GoodsType(BaseModel):
     '''商品类型模型类'''
     name = models.CharField(max_length=20,verbose_name='种类名称')
     logo = models.CharField(max_length=20,verbose_name='标识')
