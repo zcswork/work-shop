@@ -6,8 +6,8 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     {# 网页标题文件块 #}
 	<title>{%block title%}{%endblock title%}</title>
-	<link rel="stylesheet" type="text/css" href="{%static css/reset.css%}">
-	<link rel="stylesheet" type="text/css" href="{%static css/main.css%}">
+	<link rel="stylesheet" type="text/css" href="{%static 'css/reset.css'%}">
+	<link rel="stylesheet" type="text/css" href="{%static 'css/main.css'%}">
     {# 网页顶部引入文件块 #}
     {%block topfiles%}{%endblock topfiles%}
 </head>
@@ -37,7 +37,7 @@
 			</div>
 		</div>
 	</div>
-{%endblock header_cont%}
+{%endblock header_con%}
 
 {# 网页顶部搜索框块 #}
 {%block search_bar%}
