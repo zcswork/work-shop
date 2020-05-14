@@ -151,3 +151,5 @@ SESSION_CACHE_ALIAS = "default"
 
 #配置登录url地址
 LOGIN_URL='/user/login'
+
+MEDIA_ROOT=os.path.join(BASE_DIR,"static/media")
