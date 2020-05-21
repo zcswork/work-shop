@@ -29,6 +29,8 @@ class IndexView(View):
             #动态给type增加属性，分别保存首页分类商品的图片展示信息和文字展示信息
             type.image_banners = image_banners
             type.title_banners = title_banners
+            # print(image_banners)
+            # print(title_banners)
             print(image_banners)
             print(title_banners)
 
@@ -113,18 +115,22 @@ class ListView(View):
             #种类不存在
             return redirect(reverse('goods:index'))
         # 获取商品的分类信息
+        types = GoodsType.objects.all().filter()
+
         types = GoodsType.objects.all()
         #获取排序的方式
         #sort=default 按照默认id排序
         #sort=price 按照价格排序
         #sort=hot 按照销量排序
         sort = request.GET.get('sort')
+
         if sort == 'price':
-            skus = GoodsType.objects.all().filter(name=types).order_by('price')
+            skus = GoodsSKU.objects.all().filter(type=type).order_by('price')
         elif sort == 'hot':
-            skus = GoodsType.objects.all().filter(name=types).order_by('-sales')
+            skus = GoodsSKU.objects.all().filter(type=type).order_by('-sales')
         else:
-            skus = GoodsType.objects.all().filter(name=types).order_by('-id')
+            sort = 'default'
+            skus = GoodsSKU.objects.all().filter(type=type).order_by('-id')
 
         #对数据进行分页
         paginator = Paginator(skus,1)
@@ -138,8 +144,24 @@ class ListView(View):
         if page > paginator.num_pages:
             page = 1
 
+
         #获取第page页的Page实例对象
         skus_page = paginator.page(page)
+
+        # 进行页码的控制，页面最多显示5个页码
+        # 1.总页数小于5页，页面上显示所有页码
+        # 2.如果当前页是前3页，页面上显示1-5页
+        # 3.如果当前页是后3页，页面上显示后5页
+        # 4.其他情况，显示当前页的前2页，当前页，当前页后2页
+        num_page = paginator.num_pages
+        if num_page < 5:
+            pages = range(1,num_page+1)
+        elif page <= 3:
+            pages = range(1,6)
+        elif num_page - page <=2:
+            pages = range(num_page-4,num_page+1)
+        else:
+            pages = range(page-2,page+3)
 
         # 获取新品信息
         new_skus = GoodsSKU.objects.filter(type=type).order_by('-create_time')[0:2]
@@ -158,7 +180,8 @@ class ListView(View):
                    'skus_page':skus_page,
                    'new_skus':new_skus,
                    'cart_count':cart_count,
-                   'sort':sort
+                   'sort':sort,'pages':pages
+
                    }
 
         return render(request,'list.html',context)

@@ -3,6 +3,12 @@ from db.base_model import BaseModel
 
 class OrderInfo(BaseModel):
     '''订单模型类'''
+    PAY_METHODS = {
+        '1': '货到付款',
+        '2': '微信支付',
+        '3': '支付宝',
+        '4': '银联支付',
+    }
     PAY_METHOD_CHOICES = (
         (1,'货到付款'),
         (2,'微信支付'),
@@ -25,6 +31,7 @@ class OrderInfo(BaseModel):
     total_count = models.IntegerField(default=1,verbose_name='商品数量')
     total_price = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='商品总价')
     transit_prices = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='商品运费')
+    trade_no = models.CharField(max_length=128,default='',verbose_name='支付编号')
     trade_no = models.CharField(max_length=128,verbose_name='支付编号')
     class Meta():
         db_table = 'df_order_info'
