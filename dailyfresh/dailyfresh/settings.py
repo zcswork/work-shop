@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',#富文本编辑器
+    'haystack',#注册全文检索框架
     'cart',#购物车模块
     'goods',#商品模块
     'order',#订单模块
@@ -153,3 +154,20 @@ SESSION_CACHE_ALIAS = "default"
 LOGIN_URL='/user/login'
 
 MEDIA_ROOT=os.path.join(BASE_DIR,"static/media")
+
+#全文检索框架配置
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        #使用whoosh引擎
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        #索引文件路径
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+
+#当添加、修改、删除数据时，自动生成索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+#指定搜索结果每页显示的条数
+HAYSTACK_SEARCH_RESULTS_PER_PAGE=3
+
