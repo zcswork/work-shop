@@ -32,7 +32,7 @@ class OrderInfo(BaseModel):
     total_price = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='商品总价')
     transit_prices = models.DecimalField(max_digits=10,decimal_places=2,verbose_name='商品运费')
     trade_no = models.CharField(max_length=128,default='',verbose_name='支付编号')
-    trade_no = models.CharField(max_length=128,verbose_name='支付编号')
+
     class Meta():
         db_table = 'df_order_info'
         verbose_name = '订单'
