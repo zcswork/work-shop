@@ -199,7 +199,7 @@ class UserOrderView(LoginRequireMixin,View):
         '''显示'''
         #获取用户的订单信息
         user = request.user
-        orders = OrderInfo.objects.filter(user=user)
+        orders = OrderInfo.objects.filter(user=user).order_by('-create_time')
 
         #遍历获取订单商品的信息
         for order in orders:
@@ -212,11 +212,13 @@ class UserOrderView(LoginRequireMixin,View):
                 #动态给order_sku添加属性amount，保存商品订单小计
                 order_sku.amount = amount
 
+            # 动态order给增加属性，保存订单状态标题
+            order.status_name = OrderInfo.ORDER_STATUS[order.order_status]
             #动态order给增加属性，保存商品信息
             order.order_skus = order_skus
 
         #分页
-        paginator = Paginator(orders,1)
+        paginator = Paginator(orders,2)
 
         # 获取第page页的内容
         try:

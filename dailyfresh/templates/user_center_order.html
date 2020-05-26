@@ -6,7 +6,7 @@
 				<ul class="order_list_th w978 clearfix">
 					<li class="col01">{{order.create_time}}</li>
 					<li class="col02">{{order.order_id}}</li>
-					<li class="col02 stress">{{order.order_status}}</li>
+					<li class="col02 stress">{{order.status_name}}</li>
 				</ul>
 
 				<table class="order_list_table w980">
@@ -23,7 +23,7 @@
 								{%endfor%}
 							</td>
 							<td width="15%">{{order.total_price|add:order.transit_prices}}(含运费：{{order.transit_prices}})元</td>
-							<td width="15%">{{order.order_status}}</td>
+							<td width="15%">{{order.status_name}}</td>
 							<td width="15%"><a href="#" class="oper_btn">去付款</a></td>
 						</tr>
 					</tbody>
@@ -31,7 +31,7 @@
 				{%endfor%}
 
 				<div class="pagenation">
-					{%if order_page.has_previous_page%}
+					{%if order_page.has_previous%}
 					<a href="{%url 'user:order' order_page.previous_page_number%}"><上一页</a>
 					{%endif%}
 					{%for pindex in pages%}
@@ -41,7 +41,7 @@
 							<a href="{%url 'user:order' pindex%}">{{pindex}}</a>、
 						{%endif%}
 					{%endfor%}
-					{%if order_page.has_next_page%}
+					{%if order_page.has_next%}
 					<a href="{%url 'user:order' order_page.next_page_number%}">下一页></a>
 					{%endif%}
 				</div>

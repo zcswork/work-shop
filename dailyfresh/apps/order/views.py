@@ -306,7 +306,7 @@ class OrderCommitView(View):
                     # 累加计算订单商品的总数目和总价格
                     amount = sku.price * int(count)
                     total_count += int(count)
-                    transit_price += amount
+                    total_price += amount
 
                     #跳出循环
                     break
